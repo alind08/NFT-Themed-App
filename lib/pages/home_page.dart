@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nft_marketplace/theme/app_themes.dart';
 import 'package:nft_marketplace/widgets/appbar.dart';
 import 'package:nft_marketplace/widgets/homePage/bid_widget.dart';
 import 'package:nft_marketplace/widgets/homePage/category.dart';
@@ -6,25 +8,30 @@ import 'package:nft_marketplace/widgets/top_creator_widget.dart';
 import 'package:nft_marketplace/widgets/homePage/video_thumbnail_widget.dart';
 import 'package:unicons/unicons.dart';
 
+import '../bloc/theme_bloc.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //check the size of device
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness ==
-        Brightness.dark; //check if device is in dark or light mode
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark; //check if device is in dark or light mode
     Color defaultFontColor = isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
       appBar: buildAppBar(
-        Icon(
-          UniconsLine.bars,
-          color: isDarkMode
-              ? Colors.white
-              : const Color(0xff3b22a1), //icon bg color
-          size: size.height * 0.025,
+        GestureDetector(
+          onTap: (){
+            context.read<ThemeCubit>().toggleTheme(isDarkMode?Brightness.light:Brightness.dark);
+          },
+          child: Icon(
+            isDarkMode?UniconsLine.sun:UniconsLine.moon,
+            color: isDarkMode
+                ? Colors.white
+                : const Color(0xff3b22a1), //icon bg color
+            size: size.height * 0.025,
+          ),
         ),
         isDarkMode,
         size,

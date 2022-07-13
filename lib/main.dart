@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart' as myget;
+import 'package:nft_marketplace/bloc/theme_bloc.dart';
+import 'package:nft_marketplace/bloc/theme_state.dart';
 import 'package:nft_marketplace/pages/home_page.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const App());
+import 'bloc/bloc_observer.dart';
+
+void main() {
+  BlocOverrides.runZoned(
+    () {
+       WidgetsFlutterBinding.ensureInitialized();
+       runApp(const App());
+    },
+    blocObserver: AppBlocObserver(),
+  );
 }
 
-class App extends StatefulWidget {
+
+
+class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
-  @override
-  _AppState createState() => _AppState();
-}
 
-class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      defaultTransition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
+    return BlocProvider(
+      create: (_) => ThemeCubit(),
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (_, ThemeState state) {
+        return  myget.GetMaterialApp(
+          theme: state.themeData,
+      defaultTransition: myget.Transition.rightToLeft,
+      transitionDuration: const Duration(milliseconds: 200),
       debugShowCheckedModeBanner: false,
       title: 'NFT Marketplace',
-      home: HomePage(),
+      home: const HomePage(),
+    );
+      },
+    )
     );
   }
 }

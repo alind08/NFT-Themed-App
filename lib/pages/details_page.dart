@@ -28,8 +28,7 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //check the size of device
     var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness ==
-        Brightness.dark; //check if device is in dark or light mode
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark; //check if device is in dark or light mode
     Color defaultFontColor = isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(

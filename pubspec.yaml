@@ -37,6 +37,8 @@ dependencies:
   get: ^4.6.1
   google_fonts: ^2.2.0
   unicons: ^2.0.2
+  flutter_bloc: ^8.0.1
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:

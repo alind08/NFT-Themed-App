@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:unicons/unicons.dart';
+
+import '../pages/preference_page.dart';
 
 PreferredSize buildAppBar(Widget leading, bool isDarkMode, Size size) {
   return PreferredSize(
